@@ -1,5 +1,5 @@
 import XCTest
-@testable import lml
+@testable import ImageTransformation
 
 final class lmlTests: XCTestCase {
     func test_dct_2d_ii() {

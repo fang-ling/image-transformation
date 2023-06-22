@@ -1,30 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "image-codec",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/fang-ling/image-codec",
-      "state" : {
-        "revision" : "4748f17738bd38b8367e6ebbb509184e58521ecb",
-        "version" : "0.0.12"
-      }
-    },
-    {
       "identity" : "image-intermedia",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/fang-ling/image-intermedia",
       "state" : {
         "revision" : "a4fde248d9ea4b6589d069812f45c5ec50d03b73",
         "version" : "0.0.1"
-      }
-    },
-    {
-      "identity" : "swift-png",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tayloraswift/swift-png",
-      "state" : {
-        "revision" : "075dfb248ae327822635370e9d4f94a5d3fe93b2",
-        "version" : "4.0.2"
       }
     }
   ],

@@ -5,7 +5,7 @@
 //  Created by Fang Ling on 2023/6/11.
 //
 
-import txt
+import ImageIntermedia
 
 extension Resizer {
     @inlinable
