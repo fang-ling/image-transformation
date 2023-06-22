@@ -6,18 +6,20 @@ let package = Package(
   products: [
     .library(
       name: "lml",
-      targets: ["lml"]),
+      targets: ["lml"]
+    ),
   ],
   dependencies: [
-    .package(url: "https://github.com/fang-ling/image-codec", from: "0.0.4")
+    .package(url: "https://github.com/fang-ling/image-codec", from: "0.0.12")
   ],
   targets: [
     .target(
       name: "lml",
-      dependencies: [.product(name: "txt", package: "image-codec")]
+      dependencies: [.product(name: "ImageCodec", package: "image-codec")]
     ),
     .testTarget(
       name: "lmlTests",
-      dependencies: ["lml"]),
+      dependencies: ["lml"]
+    ),
   ]
 )
