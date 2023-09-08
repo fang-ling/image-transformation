@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "image-intermedia",
+      "identity" : "image-codec",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/fang-ling/image-intermedia",
+      "location" : "https://github.com/fang-ling/image-codec",
       "state" : {
-        "revision" : "a4fde248d9ea4b6589d069812f45c5ec50d03b73",
-        "version" : "0.0.1"
+        "revision" : "7501b7566d62595172701c9d38d296622875be13",
+        "version" : "0.0.14"
       }
     }
   ],

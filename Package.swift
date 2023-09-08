@@ -3,20 +3,18 @@ import PackageDescription
 
 let package = Package(
   name: "lml",
+  platforms: [.macOS(.v13)],
   products: [
     .library(name: "ImageTransformation", targets: ["ImageTransformation"]),
   ],
   dependencies: [
-    .package(
-      url: "https://github.com/fang-ling/image-intermedia",
-      from: "0.0.1"
-    )
+    .package(url: "https://github.com/fang-ling/image-codec", from: "0.0.14"),
   ],
   targets: [
     .target(
       name: "ImageTransformation",
       dependencies: [
-        .product(name: "ImageIntermedia", package: "image-intermedia")
+        .product(name: "ImageCodec", package: "image-codec")
       ]
     ),
     .testTarget(
