@@ -22,9 +22,11 @@ public func nearest_neighbor_interpolation(
     dst_metadata.width = dst_width
     dst_metadata.height = dst_height
     var dst_pixels = [UInt16]()
-    /* Calculate scale factor */
+
+    /* Calculate scaling factors */
     let s_r = Double(src_height) / Double(dst_height)
     let s_c = Double(src_width) / Double(dst_width)
+
     /*
      * let source's r be r, source's c be c and
      *     destination's r be r', destination's c be c'.
@@ -36,14 +38,15 @@ public func nearest_neighbor_interpolation(
      * c = Int(c' * s_c)
      */
     for r_prime in 0 ..< dst_height {
+        let r = Int(Double(r_prime) * s_r)
+
         for c_prime in 0  ..< dst_width {
-            let r = Int(Double(r_prime) * s_r)
             let c = Int(Double(c_prime) * s_c)
+
             /* Four channels for R, G, B and A. */
+            let index = r * src_width + c
             for i in 0 ..< 4 {
-                dst_pixels.append(
-                  UInt16(src_pixels[(r * src_width + c) * 4 + i])
-                )
+                dst_pixels.append(UInt16(src_pixels[index * 4 + i]))
             }
         }
     }

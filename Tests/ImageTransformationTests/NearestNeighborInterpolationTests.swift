@@ -30,8 +30,10 @@ final class NearestNeighborInterpolationTests : XCTestCase {
                 Int(Double(src_metadata!.width) * 0.4),
                 Int(Double(src_metadata!.height) * 0.4)
               ),
-              (src_metadata!.width * 3, src_metadata!.height * 3)
+              (src_metadata!.width * 3, src_metadata!.height * 3),
+              (512, 512)
             ]
+
             for i in sizes.indices {
                 /* NN interpolation */
                 let (dst_pixels, dst_metadata) = nearest_neighbor_interpolation(
