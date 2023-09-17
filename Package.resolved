@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/fang-ling/image-codec",
       "state" : {
-        "revision" : "7501b7566d62595172701c9d38d296622875be13",
-        "version" : "0.0.14"
+        "revision" : "1cdf6b808c1bc3df429533bc39f69b274a1dd184",
+        "version" : "0.0.19"
       }
     }
   ],

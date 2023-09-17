@@ -8,7 +8,7 @@ let package = Package(
     .library(name: "ImageTransformation", targets: ["ImageTransformation"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/fang-ling/image-codec", from: "0.0.14"),
+    .package(url: "https://github.com/fang-ling/image-codec", from: "0.0.19"),
   ],
   targets: [
     .target(
