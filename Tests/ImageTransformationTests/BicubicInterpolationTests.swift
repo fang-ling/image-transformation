@@ -1,16 +1,16 @@
 //
-//  BilinearInterpolationTests.swift
+//  BicubicInterpolationTests.swift
+//  
 //
-//
-//  Created by Fang Ling on 2023/9/15.
+//  Created by Fang Ling on 2023/9/17.
 //
 
 import ImageCodec
 @testable import ImageTransformation
 import XCTest
 
-final class BilinearInterpolationTests : XCTestCase {
-  func test_bilinear_interpolation() {
+final class BicubicInterpolationTests : XCTestCase {
+  func test_bicubic_interpolation() {
     let images = [
       "Images/test.jpg",
       "Images/building.jpg",
@@ -33,8 +33,8 @@ final class BilinearInterpolationTests : XCTestCase {
         (src_pixel_buf.width * 3, src_pixel_buf.height * 3)
       ]
       for i in sizes.indices {
-        /* BL interpolation */
-        let dst_pixel_buf = bilinear_interpolation(
+        /* BC interpolation */
+        let dst_pixel_buf = bicubic_interpolation(
           src_pixel_buf: src_pixel_buf,
           dst_width: sizes[i].0,
           dst_height: sizes[i].1
@@ -42,7 +42,7 @@ final class BilinearInterpolationTests : XCTestCase {
         /* Encode the output image */
         image_encode(
           file_path: image.components(separatedBy: "/")
-                          .joined(separator: "/bl-\(i)-")
+                          .joined(separator: "/bc-\(i)-")
                           .replacingOccurrences(of: "jpg", with: "png")
                           .replacingOccurrences(of: "png", with: "heic"),
           pixel_buffer: dst_pixel_buf,
