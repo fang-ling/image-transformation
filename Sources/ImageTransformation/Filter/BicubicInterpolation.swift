@@ -5,8 +5,8 @@
 //  Created by Fang Ling on 2023/9/17.
 //
 
-import ImageCodec
 import Foundation
+import ImageCodec
 
 /* Returns nearest valid index */
 @inlinable
@@ -57,6 +57,7 @@ public func bicubic_interpolation(
   dst_width : Int,
   dst_height : Int
 ) -> PixelBuffer {
+  let CC = src_pixel_buf.component_count
   /*
    * Let I be r_in * c_in image. We want to resize I to r_out * c_out and make
    * a new image.

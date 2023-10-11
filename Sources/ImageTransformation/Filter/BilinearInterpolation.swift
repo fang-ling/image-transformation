@@ -5,8 +5,8 @@
 //  Created by Fang Ling on 2023/6/11.
 //
 
-import ImageCodec
 import Foundation
+import ImageCodec
 
 @inlinable
 public func bilinear_interpolation(
@@ -14,6 +14,7 @@ public func bilinear_interpolation(
   dst_width : Int,
   dst_height : Int
 ) -> PixelBuffer {
+  let CC = src_pixel_buf.component_count
   /*
    * Let I be r_in * c_in image. We want to resize I to r_out * c_out and make
    * a new image.

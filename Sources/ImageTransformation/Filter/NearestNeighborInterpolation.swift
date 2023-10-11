@@ -5,8 +5,8 @@
 //  Created by Fang Ling on 2023/9/14.
 //
 
-import ImageCodec
 import Foundation
+import ImageCodec
 
 @inlinable
 public func nearest_neighbor_interpolation(
@@ -50,6 +50,7 @@ public func nearest_neighbor_interpolation(
    * r = Int(r' * s_r)
    * c = Int(c' * s_c)
    */
+  let CC = src_pixel_buf.component_count
   for r_prime in 0 ..< dst_height {
     for c_prime in 0  ..< dst_width {
       let r_0 = Int(Double(r_prime) * s_r)
