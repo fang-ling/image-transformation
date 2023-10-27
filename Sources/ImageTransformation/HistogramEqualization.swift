@@ -45,7 +45,8 @@ func histogram_equalization(src_buf : PixelBuffer) -> PixelBuffer {
   for r in 0 ..< src_buf.height {
     for c in 0 ..< src_buf.width {
       for j in 0 ..< CC {
-        src_buf.array[(r * src_buf.width + c) * CC + j] = S[j][Int(src_buf.array[(r * src_buf.width + c) * CC + j])]
+        src_buf.array[(r * src_buf.width + c) * CC + j] = 
+          S[j][Int(src_buf.array[(r * src_buf.width + c) * CC + j])]
       }
     }
   }

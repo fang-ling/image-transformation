@@ -8,7 +8,7 @@
 import Foundation
 import ImageCodec
 
-func median_filter(src_buf : PixelBuffer, k_size : Int) -> PixelBuffer {
+public func median_filter(src_buf : PixelBuffer, k_size : Int) -> PixelBuffer {
   let CC = src_buf.component_count
   let H = src_buf.height
   let W = src_buf.width

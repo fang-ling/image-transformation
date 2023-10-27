@@ -8,18 +8,20 @@
 import Foundation
 import ImageCodec
 
-fileprivate let kernel =
-  [ 
-    //0, 0, 0,  0, 0, 0, 0,
-    //0, 0, 0,  0, 0, 0, 0,
-    /*0, 0, */0,  1, 0,// 0, 0,
-              /*0, 0, */1, -4, 1,// 0, 0,
-              /*0, 0, */0,  1, 0,// 0, 0,
-    //0, 0, 0,  0, 0,// 0, 0,
-    //0, 0, 0,  0, 0,// 0, 0
-  ]
+public enum LaplacianKernel : Int {
+  case four = 0
+  case eight = 1
+}
 
-func laplacian_sharpening(src_buf : PixelBuffer) -> PixelBuffer {
+let kernels : [[Int]] = [
+  [0, 1, 0, 1, -4, 1, 0, 1, 0],
+  [1, 1, 1, 1, -8, 1, 1, 1, 1]
+]
+
+public func laplacian_sharpening(
+  src_buf : PixelBuffer,
+  kernel : LaplacianKernel
+) -> PixelBuffer {
   let k_size = 3
   let CC = src_buf.component_count
   let H = src_buf.height
@@ -38,7 +40,7 @@ func laplacian_sharpening(src_buf : PixelBuffer) -> PixelBuffer {
                   squeeze(r + j, 0, H - 1) * W +
                   squeeze(c + i, 0, W - 1)
                 ) * CC + k
-              ]) * kernel[(j+1) * 3 + (i+1)]
+              ]) * kernels[kernel.rawValue][(j+1) * 3 + (i+1)]
           }
         }
         new_buf.array[(r * W + c) * CC + k] =
