@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ImageCodec
 
 struct Complex {
   var real : Double
@@ -42,6 +43,10 @@ struct Complex {
   @inlinable
   static func / (lhs : Complex, rhs : Double) -> Complex {
     return Complex(lhs.real / rhs, lhs.imaginary / rhs)
+  }
+  
+  func magnitude() -> Double {
+    return sqrt(real * real + imaginary * imaginary)
   }
 }
 
@@ -84,4 +89,60 @@ func _fft(_ a : inout [Complex], _ is_inv : Bool) {
 
 func _ifft_normalize(_ a : inout [Complex]) {
   a = a.map { $0 / Double(a.count) }
+}
+
+func fft_2d(_ src_buf : PixelBuffer) -> [[[Complex]]] {
+  let CC = src_buf.component_count
+  /*
+   * pixels[ComponentCount][height][width]
+   */
+  var pixels = [[[UInt8]]](
+    repeating: [[UInt8]](
+      repeating: [UInt8](
+        repeating: 0, count: src_buf.width
+      ),
+      count: src_buf.height
+    ),
+    count: CC
+  )
+  for k in 0 ..< CC {
+    for r in 0 ..< src_buf.height {
+      for c in 0 ..< src_buf.width {
+        pixels[k][r][c] = src_buf.array[(r * src_buf.width + c) * CC + k]
+      }
+    }
+  }
+  
+  var c_pixels = pixels.map { $0.map { $0.map { Complex(Double($0), 0) }}}
+  /* Row fft */
+  for k in 0 ..< CC {
+    for r in 0 ..< src_buf.height {
+      _fft(&c_pixels[k][r], false)
+    }
+  }
+  var transpose = [[Complex]](
+    repeating: [Complex](repeating: Complex(0,0), count: src_buf.width),
+    count: src_buf.height
+  )
+  /* Column fft */
+  for k in 0 ..< CC {
+    /* Transpose */
+    for r in 0 ..< src_buf.height {
+      for c in 0 ..< src_buf.width {
+        transpose[c][r] = c_pixels[k][r][c]
+      }
+    }
+    /* Row fft */
+    for c in 0 ..< src_buf.width {
+      _fft(&transpose[c], false)
+    }
+    /* Transpose back */
+    for c in 0 ..< src_buf.width {
+      for r in 0 ..< src_buf.height {
+        c_pixels[k][r][c] = transpose[c][r]
+      }
+    }
+  }
+  
+  return c_pixels
 }
