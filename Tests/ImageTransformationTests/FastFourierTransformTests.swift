@@ -40,5 +40,108 @@ final class FastFourierTransformTests : XCTestCase {
       }
     }
     image_encode(file_path: "/tmp/2.jpg", pixel_buffer: buf, quality: 1)
+    
+    image_encode(
+      file_path: "/tmp/3.jpg",
+      pixel_buffer: ifft_2d(c_pixels, buf),
+      quality: 1
+    )
+  }
+  
+  func test_fft_2d_enhance() {
+    let lowpass_distance = 64 * 64
+    let buf = image_decode(file_path: "/tmp/1.jpg")!
+    var c_pixels = fft_2d(buf)
+//    c_pixels = c_pixels.map { $0.map { $0.map { $0 * Complex(1.5, 0) } } }
+    let h = buf.height
+    let w = buf.width
+    for k in 0 ..< buf.component_count {
+      /* Left-up */
+      for r in 0 ..< h / 2 {
+        for c in 0 ..< w / 2 {
+          if (r - 0) * (r - 0) + (c - 0) * (c - 0) > lowpass_distance {
+            c_pixels[k][r][c] = c_pixels[k][r][c] * Complex(1.5, 0)
+          }
+        }
+      }
+      /* Right-up */
+      for r in 0 ..< h / 2 {
+        for c in w / 2 ..< w {
+          if (r - 0) * (r - 0) + (c - w + 1) * (c - w + 1) > lowpass_distance {
+            c_pixels[k][r][c] = c_pixels[k][r][c] * Complex(1.5, 0)
+          }
+        }
+      }
+      /* Left-down */
+      for r in h / 2 ..< h {
+        for c in 0 ..< w / 2 {
+          if (r - h + 1) * (r - h + 1) + (c - 0) * (c - 0) > lowpass_distance {
+            c_pixels[k][r][c] = c_pixels[k][r][c] * Complex(1.5, 0)
+          }
+        }
+      }
+      /* Right-down */
+      for r in h / 2 ..< h {
+        for c in w / 2 ..< w {
+          if (r - h + 1) * (r - h + 1) + (c - w + 1) * (c - w + 1) > lowpass_distance {
+            c_pixels[k][r][c] = c_pixels[k][r][c] * Complex(1.5, 0)
+          }
+        }
+      }
+    }
+    
+    image_encode(
+      file_path: "/tmp/3.jpg",
+      pixel_buffer: ifft_2d(c_pixels, buf),
+      quality: 1
+    )
+  }
+  
+  func test_fft_2d_lowpass() {
+    let lowpass_distance = 64 * 64
+    
+    let buf = image_decode(file_path: "/tmp/1.jpg")!
+    var c_pixels = fft_2d(buf)
+    let h = buf.height
+    let w = buf.width
+    for k in 0 ..< buf.component_count {
+      /* Left-up */
+      for r in 0 ..< h / 2 {
+        for c in 0 ..< w / 2 {
+          if (r - 0) * (r - 0) + (c - 0) * (c - 0) > lowpass_distance {
+            c_pixels[k][r][c] = Complex(0, 0)
+          }
+        }
+      }
+      /* Right-up */
+      for r in 0 ..< h / 2 {
+        for c in w / 2 ..< w {
+          if (r - 0) * (r - 0) + (c - w + 1) * (c - w + 1) > lowpass_distance {
+            c_pixels[k][r][c] = Complex(0, 0)
+          }
+        }
+      }
+      /* Left-down */
+      for r in h / 2 ..< h {
+        for c in 0 ..< w / 2 {
+          if (r - h + 1) * (r - h + 1) + (c - 0) * (c - 0) > lowpass_distance {
+            c_pixels[k][r][c] = Complex(0, 0)
+          }
+        }
+      }
+      /* Right-down */
+      for r in h / 2 ..< h {
+        for c in w / 2 ..< w {
+          if (r - h + 1) * (r - h + 1) + (c - w + 1) * (c - w + 1) > lowpass_distance {
+            c_pixels[k][r][c] = Complex(0, 0)
+          }
+        }
+      }
+    }
+    image_encode(
+      file_path: "/tmp/4.jpg",
+      pixel_buffer: ifft_2d(c_pixels, buf),
+      quality: 1
+    )
   }
 }

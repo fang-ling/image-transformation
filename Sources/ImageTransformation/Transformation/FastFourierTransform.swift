@@ -146,3 +146,63 @@ func fft_2d(_ src_buf : PixelBuffer) -> [[[Complex]]] {
   
   return c_pixels
 }
+
+func ifft_2d(
+  _ c_pixels : [[[Complex]]],
+  _ src_buf : PixelBuffer
+) -> PixelBuffer {
+  /*
+   * c_pixels[ComponentCount][height][width]
+   */
+  var c_pixels = c_pixels
+  var buf = src_buf
+  let CC = src_buf.component_count
+  var transpose = [[Complex]](
+    repeating: [Complex](repeating: Complex(0,0), count: src_buf.width),
+    count: src_buf.height
+  )
+  /* Column fft */
+  for k in 0 ..< CC {
+    /* Transpose */
+    for r in 0 ..< src_buf.height {
+      for c in 0 ..< src_buf.width {
+        transpose[c][r] = c_pixels[k][r][c]
+      }
+    }
+    /* Row fft */
+    for c in 0 ..< src_buf.width {
+      _fft(&transpose[c], true)
+    }
+    /* Normalize */
+    for c in 0 ..< src_buf.width {
+      _ifft_normalize(&transpose[c])
+    }
+    /* Transpose back */
+    for c in 0 ..< src_buf.width {
+      for r in 0 ..< src_buf.height {
+        c_pixels[k][r][c] = transpose[c][r]
+      }
+    }
+  }
+  /* Row fft */
+  for k in 0 ..< CC {
+    for r in 0 ..< src_buf.height {
+      _fft(&c_pixels[k][r], true)
+    }
+  }
+  /* Normalize */
+  for k in 0 ..< CC {
+    for r in 0 ..< src_buf.height {
+      _ifft_normalize(&c_pixels[k][r])
+    }
+  }
+  for k in 0 ..< CC {
+    for r in 0 ..< src_buf.height {
+      for c in 0 ..< src_buf.width {
+        buf.array[(r * src_buf.width + c) * CC + k] = UInt8(squeeze(c_pixels[k][r][c].real, 0, 255))
+      }
+    }
+  }
+  
+  return buf
+}
