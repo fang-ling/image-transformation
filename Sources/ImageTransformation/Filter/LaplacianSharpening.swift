@@ -17,7 +17,8 @@ let kernels : [[Int]] = [
   [0, 1, 0, 1, -4, 1, 0, 1, 0],
   [1, 1, 1, 1, -8, 1, 1, 1, 1]
 ]
-
+/* Due to API updates, it is temporarily unavailable. */
+/*
 public func laplacian_sharpening(
   src_buf : PixelBuffer,
   kernel : LaplacianKernel
@@ -49,4 +50,4 @@ public func laplacian_sharpening(
     }
   }
   return new_buf
-}
+}*/

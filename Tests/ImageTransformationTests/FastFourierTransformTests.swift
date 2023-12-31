@@ -25,7 +25,7 @@ final class FastFourierTransformTests : XCTestCase {
     XCTAssertEqual(c.map { Int($0.real) }, [7, 17, 60, 31, 35, 0, 0, 0])
   }
   
-  func test_fft_2d() {
+  /*func test_fft_2d() {
     var buf = image_decode(file_path: "/tmp/1.jpg")!
     let c_pixels = fft_2d(buf)
     let pixels = c_pixels.map {
@@ -143,5 +143,5 @@ final class FastFourierTransformTests : XCTestCase {
       pixel_buffer: ifft_2d(c_pixels, buf),
       quality: 1
     )
-  }
+  }*/
 }

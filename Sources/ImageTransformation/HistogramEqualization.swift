@@ -8,6 +8,8 @@
 import Foundation
 import ImageCodec
 
+/* Due to API updates, it is temporarily unavailable. */
+/*
 func histogram_equalization(src_buf : PixelBuffer) -> PixelBuffer {
   let CC = src_buf.component_count /* Channel Count */
   var src_buf = src_buf
@@ -52,3 +54,4 @@ func histogram_equalization(src_buf : PixelBuffer) -> PixelBuffer {
   }
   return src_buf
 }
+*/

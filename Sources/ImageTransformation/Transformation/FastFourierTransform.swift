@@ -90,7 +90,8 @@ func _fft(_ a : inout [Complex], _ is_inv : Bool) {
 func _ifft_normalize(_ a : inout [Complex]) {
   a = a.map { $0 / Double(a.count) }
 }
-
+/* Due to API updates, it is temporarily unavailable. */
+/*
 func fft_2d(_ src_buf : PixelBuffer) -> [[[Complex]]] {
   let CC = src_buf.component_count
   /*
@@ -206,3 +207,4 @@ func ifft_2d(
   
   return buf
 }
+*/

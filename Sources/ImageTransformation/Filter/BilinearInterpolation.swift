@@ -6,35 +6,23 @@
 //
 
 import Foundation
-import ImageCodec
 
-@inlinable
 public func bilinear_interpolation(
-  src_pixel_buf : PixelBuffer,
+  _ I : [UInt8],
+  src_width : Int,
+  src_height : Int,
   dst_width : Int,
   dst_height : Int
-) -> PixelBuffer {
-  let CC = src_pixel_buf.component_count
+) -> [UInt8] {
   /*
    * Let I be r_in * c_in image. We want to resize I to r_out * c_out and make
    * a new image.
    */
   /* Preparation */
-  let I = src_pixel_buf.array
   var J = [UInt8]()
-  var dst_pixel_buf =
-    PixelBuffer(
-      width: dst_width,
-      height: dst_height,
-      bits_per_component: src_pixel_buf.bits_per_component,
-      component_count: src_pixel_buf.component_count,
-      color_space: src_pixel_buf.color_space,
-      bitmap_info: src_pixel_buf.bitmap_info,
-      properties: src_pixel_buf.properties
-    )
   /* Size of original image */
-  let r_in = src_pixel_buf.height
-  let c_in = src_pixel_buf.width
+  let r_in = src_height
+  let c_in = src_width
   /* Size of scaled image */
   let r_out = dst_height
   let c_out = dst_width
@@ -78,19 +66,16 @@ public func bilinear_interpolation(
       let f2 = Δr * (1 - Δc)
       let f3 = (1 - Δr) * Δc
       let f4 = Δr * Δc
-      
-      for i in 0 ..< CC {
-        let j =
-          Double(I[(r_0 * c_in + c_0) * CC + i]) * f1 +
-          Double(I[(r_1 * c_in + c_0) * CC + i]) * f2 +
-          Double(I[(r_0 * c_in + c_1) * CC + i]) * f3 +
-          Double(I[(r_1 * c_in + c_1) * CC + i]) * f4
+
+      let j =
+        Double(I[r_0 * c_in + c_0]) * f1 +
+        Double(I[r_1 * c_in + c_0]) * f2 +
+        Double(I[r_0 * c_in + c_1]) * f3 +
+        Double(I[r_1 * c_in + c_1]) * f4
         
-        J.append(UInt8(j))
-      }
+      J.append(UInt8(j))
     }
   }
-  dst_pixel_buf.array = J
-  
-  return dst_pixel_buf
+  return J
 }
+

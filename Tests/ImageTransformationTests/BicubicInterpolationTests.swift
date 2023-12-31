@@ -10,7 +10,7 @@ import ImageCodec
 import XCTest
 
 final class BicubicInterpolationTests : XCTestCase {
-  func test_bicubic_interpolation() {
+  /*func test_bicubic_interpolation() {
     let images = [
       "Images/test.jpg",
       "Images/building.jpg",
@@ -50,5 +50,5 @@ final class BicubicInterpolationTests : XCTestCase {
         )
       }
     }
-  }
+  }*/
 }

@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 import XCTest
 
 final class NearestNeighborInterpolationTests : XCTestCase {
-  func test_nearest_neighbor_interpolation() {
+  /*func test_nearest_neighbor_interpolation() {
     let images = [
       "Images/test.jpg",
       "Images/building.jpg",
@@ -51,5 +51,5 @@ final class NearestNeighborInterpolationTests : XCTestCase {
         )
       }
     }
-  }
+  }*/
 }

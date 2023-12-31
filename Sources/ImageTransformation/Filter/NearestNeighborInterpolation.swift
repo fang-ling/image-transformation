@@ -8,7 +8,8 @@
 import Foundation
 import ImageCodec
 
-@inlinable
+/* Due to API updates, it is temporarily unavailable. */
+/*@inlinable
 public func nearest_neighbor_interpolation(
   src_pixel_buf : PixelBuffer,
   dst_width : Int,
@@ -65,3 +66,4 @@ public func nearest_neighbor_interpolation(
   
   return dst_pixel_buf
 }
+*/

@@ -7,7 +7,8 @@
 
 import Foundation
 import ImageCodec
-
+/* Due to API updates, it is temporarily unavailable. */
+/*
 public func lowpass_filter(src_buf : PixelBuffer, k_size : Int) -> PixelBuffer {
   let CC = src_buf.component_count
   let H = src_buf.height
@@ -36,3 +37,4 @@ public func lowpass_filter(src_buf : PixelBuffer, k_size : Int) -> PixelBuffer {
   }
   return new_buf
 }
+*/

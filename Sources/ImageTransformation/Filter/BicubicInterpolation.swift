@@ -51,7 +51,8 @@ func mat_mul_4x4(_ A : [Double], _ B : [Double]) -> [Double] {
   ]
 }
 
-@inlinable
+/* Due to API updates, it is temporarily unavailable. */
+/*@inlinable
 public func bicubic_interpolation(
   src_pixel_buf : PixelBuffer,
   dst_width : Int,
@@ -210,3 +211,4 @@ public func bicubic_interpolation(
   
   return dst_pixel_buf
 }
+*/

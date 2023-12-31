@@ -11,44 +11,37 @@ import XCTest
 
 final class BilinearInterpolationTests : XCTestCase {
   func test_bilinear_interpolation() {
-    let images = [
-      "Images/test.jpg",
-      "Images/building.jpg",
-      "Images/cameraman.heic",
-      "Images/lenna.jpg"
-    ]
-    
-    for image in images {
-      /* Decode image */
-      let src_pixel_buf = image_decode(file_path: image)
-      guard let src_pixel_buf else {
-        fatalError("unable to decode image")
-      }
-      /* Calculate sizes */
-      let sizes = [
-        (
-          Int(Double(src_pixel_buf.width) * 0.4),
-          Int(Double(src_pixel_buf.height) * 0.4)
-        ),
-        (src_pixel_buf.width * 3, src_pixel_buf.height * 3)
-      ]
-      for i in sizes.indices {
-        /* BL interpolation */
-        let dst_pixel_buf = bilinear_interpolation(
-          src_pixel_buf: src_pixel_buf,
-          dst_width: sizes[i].0,
-          dst_height: sizes[i].1
-        )
-        /* Encode the output image */
-        image_encode(
-          file_path: image.components(separatedBy: "/")
-                          .joined(separator: "/bl-\(i)-")
-                          .replacingOccurrences(of: "jpg", with: "png")
-                          .replacingOccurrences(of: "png", with: "heic"),
-          pixel_buffer: dst_pixel_buf,
-          quality: 1
-        )
-      }
+    /* Decode image */
+    let src = image_decode(file_path: "/tmp/1.jpg")
+    guard let src else {
+      fatalError("unable to decode image")
     }
+    var dst1 = src
+    for i in 0 ..< dst1.component_count {
+      dst1.components[i] = bilinear_interpolation(
+        dst1.components[i],
+        src_width: dst1.width,
+        src_height: dst1.height,
+        dst_width: 64,
+        dst_height: 64
+      )
+    }
+    dst1.width = 64
+    dst1.height = 64
+    image_encode(file_path: "/tmp/2.heic", pixel_buffer: dst1, quality: 1.0)
+
+    var dst2 = src
+    for i in 0 ..< dst1.component_count {
+      dst2.components[i] = bilinear_interpolation(
+        dst2.components[i],
+        src_width: dst2.width,
+        src_height: dst2.height,
+        dst_width: 1333,
+        dst_height: 2444
+      )
+    }
+    dst2.width = 1333
+    dst2.height = 2444
+    image_encode(file_path: "/tmp/3.heic", pixel_buffer: dst2, quality: 1.0)
   }
 }
