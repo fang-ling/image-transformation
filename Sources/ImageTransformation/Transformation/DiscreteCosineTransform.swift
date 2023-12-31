@@ -7,13 +7,71 @@
 
 import Foundation
 
+/* 1-D DCT-II */
+func _dct(_ x : [Double]) -> [Double] {
+  let N = x.count
+  var X = [Double]()
+  X.reserveCapacity(N)
+
+  /* constants */
+  let π_over_N = π / Double(N)
+
+  for k in 0 ..< N {
+    var sum = 0.0
+    for n in 0 ..< N {
+      /* x_n * cos(π/N * (n + 1/2) * k) */
+      sum += x[n] * cos(π_over_N * (Double(n) + 0.5) * Double(k))
+    }
+    X.append(sum)
+  }
+
+  /* Normalize (make it orthogonal) */
+  X[0] *= 1 / sqrt(Double(N))
+  let µ = sqrt(2) / sqrt(Double(N))
+  for i in 1 ..< X.count {
+    X[i] *= µ
+  }
+
+  return X
+}
+
+/* x: width * height */
+public func dct_2d(_ x : [Double], width : Int, height : Int) -> [Double] {
+  var X = [Double]()
+  X.reserveCapacity(x.count)
+  /* Row DCT */
+  for r in 0 ..< height {
+    X += _dct(Array(x[r * width ..< (r + 1) * width]))
+  }
+  /* Column DCT */
+  /* In-place transpose is most difficult for a non-square. */
+  var X_T = [Double](repeating: 0, count: X.count)
+  for r in 0 ..< height {
+    for c in 0 ..< width {
+      X_T[c * height + r] = X[r * width + c]
+    }
+  }
+  X.removeAll(keepingCapacity: true)
+  for c in 0 ..< width {
+    X += _dct(Array(X_T[c * height ..< (c + 1) * height]))
+  }
+  /* Transpose back */
+  X_T = [Double](repeating: 0, count: x.count)
+  for c in 0 ..< width {
+    for r in 0 ..< height {
+      X_T[r * width + c] = X[c * height + r]
+    }
+  }
+  return X_T
+}
+
 /*
  * 2-D DCT-II formula
  *
  * See https://en.wikipedia.org/wiki/Discrete_cosine_transform#M-D_DCT-II
  * for more infomation.
  */
-@inlinable
+@available(*, deprecated, message: "Use dct_2d(:width:height) instead")
 public func dct_2d_ii(_ x : [Double], rows : Int, cols : Int) -> [Double] {
     var X = [Double](repeating: 0, count: rows * cols)
     let r_d = Double(rows)
@@ -45,7 +103,7 @@ public func dct_2d_ii(_ x : [Double], rows : Int, cols : Int) -> [Double] {
 /*
  * Inverse 2-D DCT-II formula
  */
-@inlinable
+@available(*, deprecated, message: "No longer needed")
 public func idct_2d_ii(_ X : [Double], rows : Int, cols : Int) -> [Double] {
     var x = [Double](repeating: 0, count: rows * cols)
     let r_d = Double(rows)
