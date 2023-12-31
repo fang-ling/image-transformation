@@ -44,7 +44,7 @@ public func dct_2d(_ x : [Double], width : Int, height : Int) -> [Double] {
     X += _dct(Array(x[r * width ..< (r + 1) * width]))
   }
   /* Column DCT */
-  /* In-place transpose is most difficult for a non-square. */
+  /* In-place transpose is most difficult for a non-square matrix. */
   var X_T = [Double](repeating: 0, count: X.count)
   for r in 0 ..< height {
     for c in 0 ..< width {
