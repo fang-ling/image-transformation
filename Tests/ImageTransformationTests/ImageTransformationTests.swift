@@ -1,10 +1,10 @@
-import ImageCodec
+//import ImageCodec
 @testable import ImageTransformation
 import UniformTypeIdentifiers
 import XCTest
 
 final class lmlTests : XCTestCase {
-    func test_dct_2d_ii() {
+    /*func test_dct_2d_ii() {
         /* Rectangular */
         let M_int = [10 , 20,  30,
                      40 , 50,  60,
@@ -22,5 +22,5 @@ final class lmlTests : XCTestCase {
         let Nt = dct_2d_ii(N_int.map { Double($0) }, rows: 3, cols: 3)
         let iNt = idct_2d_ii(Nt, rows: 3, cols: 3)
         XCTAssertEqual(N_int, iNt.map { Int(round($0)) })
-    }
+    }*/
 }

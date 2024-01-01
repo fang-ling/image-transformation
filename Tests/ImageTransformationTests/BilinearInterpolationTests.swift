@@ -5,14 +5,14 @@
 //  Created by Fang Ling on 2023/9/15.
 //
 
-import ImageCodec
+//import ImageCodec
 @testable import ImageTransformation
 import XCTest
 
 final class BilinearInterpolationTests : XCTestCase {
   func test_bilinear_interpolation() {
     /* Decode image */
-    let src = image_decode(file_path: "/tmp/1.jpg")
+    /*let src = image_decode(file_path: "/tmp/1.jpg")
     guard let src else {
       fatalError("unable to decode image")
     }
@@ -42,6 +42,6 @@ final class BilinearInterpolationTests : XCTestCase {
     }
     dst2.width = 1333
     dst2.height = 2444
-    image_encode(file_path: "/tmp/3.heic", pixel_buffer: dst2, quality: 1.0)
+    image_encode(file_path: "/tmp/3.heic", pixel_buffer: dst2, quality: 1.0)*/
   }
 }

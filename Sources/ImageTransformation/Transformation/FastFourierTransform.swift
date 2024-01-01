@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ImageCodec
+//import ImageCodec
 
 struct Complex {
   var real : Double

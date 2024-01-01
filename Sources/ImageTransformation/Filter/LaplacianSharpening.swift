@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ImageCodec
+//import ImageCodec
 
 public enum LaplacianKernel : Int {
   case four = 0

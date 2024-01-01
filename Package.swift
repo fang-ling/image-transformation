@@ -7,19 +7,13 @@ let package = Package(
   products: [
     .library(name: "ImageTransformation", targets: ["ImageTransformation"]),
   ],
-  dependencies: [
-    .package(url: "https://github.com/fang-ling/image-codec", from: "0.0.21"),
-  ],
   targets: [
     .target(
       name: "ImageTransformation"
     ),
     .testTarget(
       name: "ImageTransformationTests",
-      dependencies: [
-        "ImageTransformation",
-        .product(name: "ImageCodec", package: "image-codec")
-      ]
+      dependencies: ["ImageTransformation"]
     ),
   ]
 )

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ImageCodec
+//import ImageCodec
 /* Due to API updates, it is temporarily unavailable. */
 /*
 public func median_filter(src_buf : PixelBuffer, k_size : Int) -> PixelBuffer {

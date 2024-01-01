@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ImageCodec
+//import ImageCodec
 
 /* Returns nearest valid index */
 @inlinable

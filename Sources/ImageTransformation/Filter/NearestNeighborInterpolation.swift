@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ImageCodec
+//import ImageCodec
 
 /* Due to API updates, it is temporarily unavailable. */
 /*@inlinable
