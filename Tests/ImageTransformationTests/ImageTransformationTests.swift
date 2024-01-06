@@ -1,26 +1,26 @@
-//import ImageCodec
 @testable import ImageTransformation
-import UniformTypeIdentifiers
 import XCTest
 
 final class lmlTests : XCTestCase {
-    /*func test_dct_2d_ii() {
-        /* Rectangular */
-        let M_int = [10 , 20,  30,
-                     40 , 50,  60,
-                     70 , 80,  90,
-                     100, 110, 120,
-                     130, 140, 150]
-        let Mt = dct_2d_ii(M_int.map { Double($0) }, rows: 5, cols: 3)
-        let iMt = idct_2d_ii(Mt, rows: 5, cols: 3)
-        XCTAssertEqual(M_int, iMt.map { Int(round($0)) })
+  func test_corr() {
+    let I = [1.0, 6, 2,
+             5, 3, 1,
+             7, 0, 4]
+    let K = [1.0, 2,
+             -1, 0]
+    let Y_prime = [8.0, 7, 4, 5]
+    let Y = correlate_2d(I, K, mode: .valid)
+    for i in Y.indices {
+      XCTAssertEqual(Y_prime[i], Y[i], accuracy: 1e-6)
+    }
 
-        /* Square */
-        let N_int = [19358, 19342, 19306,
-                     19348, 19346, 12333,
-                     12361, 19342, 12321]
-        let Nt = dct_2d_ii(N_int.map { Double($0) }, rows: 3, cols: 3)
-        let iNt = idct_2d_ii(Nt, rows: 3, cols: 3)
-        XCTAssertEqual(N_int, iNt.map { Int(round($0)) })
-    }*/
+    let Y_full_prime = [0.0, -1, -6, -2,
+                        2, 8, 7, 1,
+                        10, 4, 5, -3,
+                        14, 7, 8, 4]
+    let Y_full = correlate_2d(I, K, mode: .full)
+    for i in Y_full.indices {
+      XCTAssertEqual(Y_full_prime[i], Y_full[i], accuracy: 1e-6)
+    }
+  }
 }
