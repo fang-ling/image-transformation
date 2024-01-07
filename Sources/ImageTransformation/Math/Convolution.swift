@@ -66,4 +66,33 @@ public func correlate_2d(
   return Y
 }
 
+func _rot180(_ K : [Double]) -> [Double] {
+  var K = K
+  
+  /* Reverse row */
+  let K_size = Int(sqrt(Double(K.count)))
+  let mid = K_size / 2
+  for r in 0 ..< K_size {
+    for c in 0 ..< mid {
+      K.swapAt(r * K_size + c, r * K_size + (K_size - c - 1))
+    }
+  }
+  
+  /* Reverse column */
+  for r in 0 ..< mid {
+    for c in 0 ..< K_size {
+      K.swapAt(r * K_size + c, (K_size - r - 1) * K_size + c)
+    }
+  }
+  
+  return K
+}
+
 /* conv(I, K) = corr(I, rot180(K))*/
+public func convolve_2d(
+  _ I : [Double],
+  _ K : [Double],
+  mode : ConvolutionMode
+) -> [Double] {
+  return correlate_2d(I, _rot180(K), mode: mode)
+}
