@@ -62,7 +62,7 @@ func _dct_iii(_ x : [Double]) -> [Double] {
 }
 
 /* x: width * height */
-public func dct_2d(_ x : [Double], width : Int, height : Int) -> [Double] {
+public func dct_2d(_ x : [Double], height : Int, width : Int) -> [Double] {
   var X = [Double]()
   X.reserveCapacity(x.count)
   /* Row DCT */
@@ -70,7 +70,6 @@ public func dct_2d(_ x : [Double], width : Int, height : Int) -> [Double] {
     X += _dct(Array(x[r * width ..< (r + 1) * width]))
   }
   /* Column DCT */
-  /* In-place transpose is most difficult for a non-square matrix. */
   var X_T = transpose(X, row: height, column: width)
   X.removeAll(keepingCapacity: true)
   for c in 0 ..< width {
@@ -78,6 +77,24 @@ public func dct_2d(_ x : [Double], width : Int, height : Int) -> [Double] {
   }
   /* Transpose back */
   X_T = transpose(X, row: width, column: height)
+  return X_T
+}
+
+public func idct_2d(_ X : [Double], height : Int, width : Int) -> [Double] {
+  var x = [Double]()
+  x.reserveCapacity(X.count)
+  /* Row DCT */
+  for r in 0 ..< height {
+    x += _dct_iii(Array(X[r * width ..< (r + 1) * width]))
+  }
+  /* Column DCT */
+  var X_T = transpose(x, row: height, column: width)
+  x.removeAll(keepingCapacity: true)
+  for c in 0 ..< width {
+    x += _dct_iii(Array(X_T[c * height ..< (c + 1) * height]))
+  }
+  /* Transpose back */
+  X_T = transpose(x, row: width, column: height)
   return X_T
 }
 

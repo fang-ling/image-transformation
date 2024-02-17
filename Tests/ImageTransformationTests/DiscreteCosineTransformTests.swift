@@ -26,4 +26,13 @@ final class DiscreteCosineTransformTests : XCTestCase {
     }
     print(x_prime)
   }
+  
+  func test_dct_idct_2d() {
+    let x : [Double] = [1, 2, 3, 4, 5, 6]
+    let x_prime = idct_2d(dct_2d(x, height: 2, width: 3), height: 2, width: 3)
+    for i in 0 ..< x.count {
+      XCTAssertEqual(x[i], x_prime[i], accuracy: 1e-6)
+    }
+    print(x_prime)
+  }
 }
