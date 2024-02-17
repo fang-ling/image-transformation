@@ -26,12 +26,38 @@ func _dct(_ x : [Double]) -> [Double] {
   }
 
   /* Normalize (make it orthogonal) */
-  X[0] *= 1 / sqrt(Double(N))
-  let µ = sqrt(2) / sqrt(Double(N))
-  for i in 1 ..< X.count {
+  X[0] *= sqrt(1 / Double(N))
+  let µ = sqrt(2 / Double(N))
+  for i in 1 ..< N {
     X[i] *= µ
   }
 
+  return X
+}
+
+/* 1-D DCI-III */
+func _dct_iii(_ x : [Double]) -> [Double] {
+  let N = x.count
+  var X = [Double]()
+  X.reserveCapacity(N)
+  
+  /* constants */
+  let π_over_N = π / Double(N)
+  
+  for k in 0 ..< N {
+    var sum = x[0] / sqrt(2)
+    for n in 1 ..< N {
+      sum += x[n] * cos(π_over_N * (Double(k) + 0.5) * Double(n))
+    }
+    X.append(sum)
+  }
+  
+  /* Normalize (make it orthogonal) */
+  let µ = sqrt(2 / Double(N))
+  for i in 0 ..< N {
+    X[i] *= µ
+  }
+  
   return X
 }
 
