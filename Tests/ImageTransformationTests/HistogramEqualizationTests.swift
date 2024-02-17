@@ -6,7 +6,6 @@
 //
 
 import Foundation
-//import ImageCodec
 @testable import ImageTransformation
 import XCTest
 
