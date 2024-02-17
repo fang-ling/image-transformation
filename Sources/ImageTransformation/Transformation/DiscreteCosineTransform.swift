@@ -45,23 +45,13 @@ public func dct_2d(_ x : [Double], width : Int, height : Int) -> [Double] {
   }
   /* Column DCT */
   /* In-place transpose is most difficult for a non-square matrix. */
-  var X_T = [Double](repeating: 0, count: X.count)
-  for r in 0 ..< height {
-    for c in 0 ..< width {
-      X_T[c * height + r] = X[r * width + c]
-    }
-  }
+  var X_T = transpose(X, row: height, column: width)
   X.removeAll(keepingCapacity: true)
   for c in 0 ..< width {
     X += _dct(Array(X_T[c * height ..< (c + 1) * height]))
   }
   /* Transpose back */
-  X_T = [Double](repeating: 0, count: x.count)
-  for c in 0 ..< width {
-    for r in 0 ..< height {
-      X_T[r * width + c] = X[c * height + r]
-    }
-  }
+  X_T = transpose(X, row: width, column: height)
   return X_T
 }
 
