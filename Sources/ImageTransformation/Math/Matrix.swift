@@ -19,3 +19,15 @@ public func transpose(_ I : [Double], row : Int, column : Int) -> [Double] {
     u_u_capacity = I.count
   }
 }
+
+public func transpose(_ I : [Float], row : Int, column : Int) -> [Float] {
+  [Float](unsafeUninitializedCapacity: I.count) { buf, u_u_capacity in
+    vDSP_mtrans(
+      I, 1,
+      buf.baseAddress!, 1,
+      vDSP_Length(column),
+      vDSP_Length(row)
+    )
+    u_u_capacity = I.count
+  }
+}
